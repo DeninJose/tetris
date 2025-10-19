@@ -4,12 +4,18 @@ import Game.Data.Point;
 import Game.Data.Points;
 
 public enum BlockType {
-    l(new Points(
+    reverseL(new Points(
             new Point(0, 0),
             new Point(1, 0),
             new Point(1, 1),
             new Point(1, 2)
-    ), new Point(1, 2)),
+    ), new Point(1, 1)),
+    l(new Points(
+            new Point(0, 0),
+            new Point(0, 1),
+            new Point(0, 2),
+            new Point(1, 0)
+    ), new Point(0, 1)),
     t(new Points(
             new Point(0, 1),
             new Point(1, 0),
@@ -28,6 +34,12 @@ public enum BlockType {
             new Point(1, 0),
             new Point(1, 1)
     ), new Point(0, 1)),
+    reverseThunder(new Points(
+            new Point(0, 1),
+            new Point(0, 2),
+            new Point(1, 1),
+            new Point(1, 0)
+    ), new Point(1, 1)),
     thunder(new Points(
             new Point(0, 0),
             new Point(0, 1),
