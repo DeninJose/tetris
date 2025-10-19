@@ -1,7 +1,7 @@
-package Game.Graphics;
+package main.java.Graphics;
 
-import Game.Board;
-import Game.GameLogic;
+import main.java.Board;
+import main.java.GameLogic;
 
 import javax.swing.*;
 import java.awt.*;

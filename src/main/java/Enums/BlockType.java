@@ -1,7 +1,7 @@
-package Game.Enums;
+package main.java.Enums;
 
-import Game.Data.Point;
-import Game.Data.Points;
+import main.java.Data.Point;
+import main.java.Data.Points;
 
 public enum BlockType {
     reverseL(new Points(

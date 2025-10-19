@@ -1,6 +1,6 @@
-package Game;
+package main.java;
 
-import Game.Graphics.Window;
+import main.java.Graphics.Window;
 
 public class Game {
     private GameLogic gameLogic = new GameLogic();

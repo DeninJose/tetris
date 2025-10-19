@@ -1,6 +1,4 @@
-package Game;
-
-import java.util.ArrayList;
+package main.java;
 
 public class GameLogic {
     private Board board = new Board();

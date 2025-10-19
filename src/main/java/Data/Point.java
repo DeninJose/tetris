@@ -1,4 +1,4 @@
-package Game.Data;
+package main.java.Data;
 
 public class Point {
     public int x = 0;

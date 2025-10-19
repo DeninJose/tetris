@@ -1,4 +1,4 @@
-package Game.Data;
+package main.java.Data;
 
 import java.util.ArrayList;
 

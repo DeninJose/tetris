@@ -1,6 +1,6 @@
-package Game.Data;
+package main.java.Data;
 
-import Game.Enums.Color;
+import main.java.Enums.Color;
 
 import java.util.ArrayList;
 

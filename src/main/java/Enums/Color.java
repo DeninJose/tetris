@@ -1,7 +1,7 @@
-package Game.Enums;
+package main.java.Enums;
 
 
-import Game.Constants.CustomColors;
+import main.java.Constants.CustomColors;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,9 +1,9 @@
-package Game;
+package main.java;
 
-import Game.Data.Point;
-import Game.Data.Points;
-import Game.Enums.BlockType;
-import Game.Enums.Color;
+import main.java.Data.Point;
+import main.java.Data.Points;
+import main.java.Enums.BlockType;
+import main.java.Enums.Color;
 
 import java.util.Random;
 

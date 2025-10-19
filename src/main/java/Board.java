@@ -1,10 +1,10 @@
-package Game;
+package main.java;
 
-import Game.Data.Cell;
-import Game.Data.Grid;
-import Game.Data.Point;
-import Game.Data.Points;
-import Game.Enums.Color;
+import main.java.Data.Cell;
+import main.java.Data.Grid;
+import main.java.Data.Point;
+import main.java.Data.Points;
+import main.java.Enums.Color;
 
 import java.awt.*;
 import java.util.ArrayList;
