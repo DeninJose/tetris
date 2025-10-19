@@ -2,6 +2,7 @@ package Game;
 
 import Game.Data.Point;
 import Game.Data.Points;
+import Game.Enums.BlockType;
 import Game.Enums.Color;
 
 import java.util.Random;

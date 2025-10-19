@@ -1,4 +1,4 @@
-package Game;
+package Game.Enums;
 
 import Game.Data.Point;
 import Game.Data.Points;
