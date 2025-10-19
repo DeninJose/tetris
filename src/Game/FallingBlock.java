@@ -1,55 +1,63 @@
 package Game;
 
-import java.util.ArrayList;
+import Game.Data.Point;
+import Game.Data.Points;
+import Game.Enums.Color;
+
 import java.util.Random;
 
 public class FallingBlock {
-    private static final int numBlockTypes = BlockType.values().length;
     private static final Random random = new Random();
 
     private BlockType blockType;
     private int timesRotated;
+    private Color color;
 
-    private ArrayList<ArrayList<Integer>> points;
-    private ArrayList<Integer> pivot;
+    private Points points;
+    private Point pivot;
 
     public FallingBlock() {
-        blockType = BlockType.values()[random.nextInt(numBlockTypes)];
+        blockType = BlockType.values()[random.nextInt(BlockType.values().length)];
         timesRotated = random.nextInt(4);
+        color = Color.getRandom(random);
 
-        points = PointUtils.getPointsDeepCopy(blockType.getPoints());
-        pivot = PointUtils.getPointDeepCopy(blockType.getPivot());
+        points = blockType.getPoints().getDeepCopy();
+        pivot = blockType.getPivot().getDeepCopy();
 
-        PointUtils.addOffsetToPoints(points, Board.width / 2, Board.height);
-        PointUtils.addOffsetToPoint(pivot, Board.width / 2, Board.height);
+        points.addOffset(Board.width / 2, Board.height);
+        pivot.addOffset(Board.width / 2, Board.height);
         // Maybe optimise if slow, maybe dont
         for (int i = 0; i < timesRotated; i++) {
-            points = PointUtils.getRotatedPoints(points, pivot);
+            points = points.getRotatedDeepCopy(pivot);
         }
     }
 
     public void offsetBlock(int x, int y){
-        PointUtils.addOffsetToPoint(pivot, x, y);
-        PointUtils.addOffsetToPoints(points, x, y);
+        pivot.addOffset(x, y);
+        points.addOffset(x, y);
 
     }
 
-    public void setPoints(ArrayList<ArrayList<Integer>> newPoints){
+    public void setPoints(Points newPoints){
         points = newPoints;
     }
 
-    public ArrayList<ArrayList<Integer>> getCurrentPosition(){
+    public Points getCurrentPosition(){
         return points;
     }
 
-    public ArrayList<ArrayList<Integer>> getOffsetPoints(int x, int y){
-        var newPoints = PointUtils.getPointsDeepCopy(points);
-        PointUtils.addOffsetToPoints(newPoints, x, y);
+    public Color getColor(){
+        return color;
+    }
+
+    public Points getOffsetPoints(int x, int y){
+        var newPoints = points.getDeepCopy();
+        newPoints.addOffset(x, y);
         return newPoints;
     }
 
-    public ArrayList<ArrayList<Integer>> getRotatedPoints(){
-        return PointUtils.getRotatedPoints(points, pivot);
+    public Points getRotatedPoints(){
+        return points.getRotatedDeepCopy(pivot);
     }
 
 }

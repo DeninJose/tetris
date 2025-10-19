@@ -8,4 +8,13 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+
+    public Point getDeepCopy(){
+        return new Point(x, y);
+    }
+
+    public void addOffset(int x, int y){
+        this.x += x;
+        this.y += y;
+    }
 }

@@ -9,10 +9,10 @@ public class GameLogic {
     public void updateGameState() {
         // Check if currentBlock has hit bottom
         var newBlock = currentBlock.getOffsetPoints(0, -1);
-        if(!board.hasReachedBottom(newBlock)){
+        if(!board.hasHitBottom(newBlock)){
             // Add block to board
             currentBlock.offsetBlock(0, -1);
-            board.updateBoardWithBlock(currentBlock.getCurrentPosition());
+            board.updateBoardWithBlock(currentBlock.getCurrentPosition(), currentBlock.getColor());
             return;
         }
         // Merge block with board
@@ -31,11 +31,7 @@ public class GameLogic {
             return;
         }
         currentBlock = newFallingBlock;
-        board.updateBoardWithBlock(newBlock);
-    }
-
-    private boolean isBlockOutOfFrame(ArrayList<ArrayList<Integer>> points){
-        return board.arePointsFree(points);
+        board.updateBoardWithBlock(newBlock, currentBlock.getColor());
     }
 
     public void moveBlockLeft(){
@@ -57,7 +53,7 @@ public class GameLogic {
             return;
         }
         currentBlock.offsetBlock(x, y);
-        board.updateBoardWithBlock(currentBlock.getCurrentPosition());
+        board.updateBoardWithBlock(currentBlock.getCurrentPosition(), currentBlock.getColor());
     }
 
     public void rotateBlock(){
@@ -67,7 +63,7 @@ public class GameLogic {
             return;
         }
         currentBlock.setPoints(shiftedBlock);
-        board.updateBoardWithBlock(currentBlock.getCurrentPosition());
+        board.updateBoardWithBlock(currentBlock.getCurrentPosition(), currentBlock.getColor());
     }
 
     public Board getBoard() {

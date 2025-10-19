@@ -1,31 +1,36 @@
 package Game;
 
+import Game.Data.Cell;
+import Game.Data.Grid;
+import Game.Data.Point;
+import Game.Data.Points;
+import Game.Enums.Color;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Board {
     public static final int height = 20;
     public static final int width = 11;
-    private ArrayList<ArrayList<Integer>> board, boardWithBlock;
+    private final Grid grid;
+    private final Grid gridWithBlock;
 
     public Board() {
-        board = PointUtils.createGrid(height, width);
-        boardWithBlock = PointUtils.createGrid(height, width);
+        grid = new Grid(height, width);
+        gridWithBlock = new Grid(height, width);
     }
 
-    public boolean hasReachedBottom(ArrayList<ArrayList<Integer>> block) {
+    public boolean hasHitBottom(Points block) {
         for (var point : block) {
-            int x = point.get(0);
-            int y = point.get(1);
-            if (y >= height) {
+            if (point.y >= height) {
                 continue;
             }
 
-            if (y < 0) {
+            if (point.y < 0) {
                 return true;
             }
 
-            if (board.get(x).get(y) == 1) {
+            if (grid.isFilled(point)) {
                 return true;
             }
         }
@@ -33,25 +38,17 @@ public class Board {
     }
 
     public void addBlockToBaseAfterHit() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                board.get(i).set(j, boardWithBlock.get(i).get(j));
-            }
-        }
+        grid.deepCopy(gridWithBlock);
     }
 
-    public void updateBoardWithBlock(ArrayList<ArrayList<Integer>> block) {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                boardWithBlock.get(i).set(j, board.get(i).get(j));
-            }
-        }
+    public void updateBoardWithBlock(Points block, Color color) {
+        gridWithBlock.deepCopy(grid);
 
         for (var point : block) {
-            if (point.get(1) >= height) {
+            if (point.y >= height) {
                 continue;
             }
-            boardWithBlock.get(point.get(0)).set(point.get(1), 1);
+            gridWithBlock.fill(point, color);
         }
     }
 
@@ -79,7 +76,7 @@ public class Board {
         for (int y = 0; y < height; y++) {
             boolean isComplete = true;
             for (int x = 0; x < width; x++) {
-                if (board.get(x).get(y) == 0) {
+                if (!grid.isFilled(x, y)) {
                     isComplete = false;
                     break;
                 }
@@ -93,45 +90,36 @@ public class Board {
 
     private void fillRowAWithRowB(int a, int b) {
         for (int x = 0; x < width; x++) {
-            board.get(x).set(a, board.get(x).get(b));
+            grid.deepCopy(x, a, grid.get(x, b));
         }
     }
 
     private void fillRowWithZeros(int row) {
         for (int x = 0; x < width; x++) {
-            board.get(x).set(row, 0);
+            grid.deepCopy(x, row, Cell.Default);
         }
     }
 
     public void paintBoard(Graphics g, int cellSize) {
         for (int x = 0; x < Board.width; x++) {
             for (int y = Board.height - 1; y >= 0; y--) {
-                if (boardWithBlock.get(x).get(y) == 1) {
-                    g.setColor(Color.ORANGE);
-                } else {
-                    g.setColor(Color.BLACK);
-                }
-
+                g.setColor(gridWithBlock.get(x, y).color.color);
                 g.fillRect(x * cellSize, (height - 1 - y) * cellSize, cellSize - 1, cellSize - 1);
             }
         }
     }
 
-    private boolean isValidPoint(ArrayList<Integer> point){
-        int x = point.get(0);
-        int y = point.get(1);
-        if(x < 0 || x >= width) return false;
-        if(y < 0 || y >= height) return false;
+    private boolean isValidPoint(Point point){
+        if(point.x < 0 || point.x >= width) return false;
+        if(point.y < 0 || point.y >= height) return false;
         return true;
     }
 
-    private boolean isPointFilled(ArrayList<Integer> point){
-        int x = point.get(0);
-        int y = point.get(1);
-        return board.get(x).get(y) == 1;
+    private boolean isPointFilled(Point point){
+        return grid.isFilled(point.x, point.y);
     }
 
-    public boolean arePointsFree(ArrayList<ArrayList<Integer>> points){
+    public boolean arePointsFree(Points points){
         for(var point : points){
             if(
                     !isValidPoint(point) ||
@@ -143,16 +131,15 @@ public class Board {
         return true;
     }
 
-    public boolean arePointsColliding(ArrayList<ArrayList<Integer>> points){
+    public boolean arePointsColliding(Points points){
         for(var point : points){
             if(isPointColliding(point)) return true;
         }
         return false;
     }
 
-    public boolean isPointColliding(ArrayList<Integer> point){
+    public boolean isPointColliding(Point point){
         if(!isValidPoint(point)) return false;
         return isPointFilled(point);
     }
-
 }
