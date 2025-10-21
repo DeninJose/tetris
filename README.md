@@ -2,5 +2,5 @@
 
 ### Steps To Run
 
-* Intall IntelliJ
+* Install IntelliJ
 * Run the Game file in src/main/java
